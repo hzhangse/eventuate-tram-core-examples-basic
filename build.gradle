@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+     	mavenLocal()
         jcenter()
         mavenCentral()
     }
@@ -21,16 +22,33 @@ subprojects {
     targetCompatibility = 1.8
 
     repositories {
+     	mavenLocal()
         mavenCentral()
         jcenter()
         eventuateMavenRepoUrl.split(',').each { repoUrl -> maven { url repoUrl } }
     }
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                repository(url: deployUrl)
+                pom.project {
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            distribution 'repo'
+                        }
+                    }
+                }
+            }
+        }
+    }    
 }
 
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '3.5'
-}
+//task wrapper(type: Wrapper) {
+   // gradleVersion = '3.5'
+//}
 
 apply plugin: 'docker-compose'
 
@@ -41,12 +59,12 @@ dockerCompose {
 
     mysqlbinlog {
         projectName = null
-        useComposeFiles = ["docker-compose-mysql-binlog.yml"]
+        useComposeFiles = ["docker-compose-mysql-binlog-hzhangse.yml"]
     }
 
     mysqlbinlogdb {
         projectName = null
-        useComposeFiles = ["docker-compose-mysql-binlog.yml"]
+        useComposeFiles = ["docker-compose-mysql-binlog-hzhangse.yml"]
         startedServices = ["mysql"]
     }
 
