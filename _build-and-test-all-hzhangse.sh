@@ -16,6 +16,6 @@ ${dockerdb}Up -i
 ${dockerall}Up
 
 ./wait-for-services.sh $DOCKER_HOST_IP 8099
-#./gradlew :eventuate-tram-examples-jdbc-${BROKER}:cleanTest :eventuate-tram-examples-jdbc-${BROKER}:test
+./gradlew :eventuate-tram-examples-jdbc-${BROKER}:cleanTest :eventuate-tram-examples-jdbc-${BROKER}:test -i
 
 #${dockerall}Down
